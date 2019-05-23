@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "btree.h"
+#include "dictionary.h"
+#include<gtk/gtk.h>
+
+int search_word(char*mean,data_give*pointer)
+{
+  char word_search[WORD_LENGTH];
+  strcpy(word_search, gtk_entry_get_text(GTK_ENTRY(pointer->GW3)));
+
+  if(word_search[0]=='\0') return 100;//chỗ này phải lấy là '\0' không được lấy là NULL vì con trỏ xâu vẫn trỏ đến 1 xâu xác định, chứ ko phair ko trỏ đến cái gì cả
+
+  chuanHoaXau(word_search);
+  
+  int rsize;//bắt buộc
+  int check=btsel(pointer->Btree,word_search,mean,MEAN_LENGTH,&rsize);
+  if(check==0) 
+    {
+      strcpy(pointer->wordNow, word_search);
+      add_to_list_his(pointer->store_history,word_search);
+    }
+  return check;
+}
+
+/*ERROR return:
+  100:ô nhập trống
+*/

@@ -1,0 +1,94 @@
+
+default: run
+#tuwj xem trong file btree nguoi ta viet make file the naof!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+#MARCO THÌ ĐẶT LÀ CÁI GFI CŨNG ĐƯỢC 
+#HDRS+=
+#CSRCS+=
+# TARGET=dictionary.exe
+#
+
+# set suffix list, to prevent confusion between different make programs
+# line 17 clears an implied suffix list, and line 18 sets a new one
+.SUFFIXES:
+.SUFFIXES: .c .h .o
+
+# specify the shell, in case the SHELL variable is not set or is not
+# inherited from the environment
+SHELL = /bin/bash
+
+# project set up and directories
+CC		=gcc
+INCLDIR_BTREE	=btree/inc
+INCLDIR		=inc
+BINDIR		=bin/
+OBJDIR		=obj/
+SRCDIR		=src/
+
+# final executable name
+_BIN	= dictionary.exe
+BIN	= $(addprefix $(BINDIR), $(_BIN))
+
+# files; here all object files will be stored in $(OBJDIR), with the
+# same base names as corresponding c files from SRCDIR
+SRC	= $(wildcard src/*.c)
+_OBJS	= $(patsubst src/%.c, %.o, $(SRC))
+OBJS	= $(addprefix $(OBJDIR), $(_OBJS))
+
+
+# compilation flags
+CFLAGS=-I$(INCLDIR_BTREE) -I$(INCLDIR) 
+LDFLAGS=-Lbtree/lib -lbt
+
+.PHONY: all #danh dau nhan dang trong truong hop trung ten
+all:$(BIN)
+$(BIN): $(BINDIR) $(OBJS)
+	clear
+	$(CC) $(CFLAGS) -no-pie $(OBJS) -o $(BIN) $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+
+
+$(BINDIR):
+	mkdir -p $(BINDIR)
+
+#$(OBJS): $(OBJDIR) $(SRC)
+#	$(CC) $(CFLAGS) $(LDFLAGS) -c $(SRC) -o $(OBJS)
+#chỗ này làm đang ngu lắm, có ai giỏi phải hỏi mói được
+
+#1
+$(OBJDIR)dictionary.o: $(SRCDIR)dictionary.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)dictionary.c -o $(OBJDIR)dictionary.o $(LDFLAGS)     `pkg-config gtk+-3.0 --cflags --libs`
+
+#2
+$(OBJDIR)search_word.o: $(SRCDIR)search_word.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)search_word.c  -o $(OBJDIR)search_word.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+#3
+$(OBJDIR)delete_word.o: $(SRCDIR)delete_word.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)delete_word.c -o $(OBJDIR)delete_word.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+#4
+$(OBJDIR)fix_word.o: $(SRCDIR)fix_word.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)fix_word.c -o $(OBJDIR)fix_word.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+#5
+$(OBJDIR)add_new_word.o: $(SRCDIR)add_new_word.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)add_new_word.c -o $(OBJDIR)add_new_word.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+#6
+$(OBJDIR)soundex.o: $(SRCDIR)soundex.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)soundex.c -o $(OBJDIR)soundex.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+#7
+$(OBJDIR)init.o: $(SRCDIR)init.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)init.c -o $(OBJDIR)init.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+#8
+$(OBJDIR)suggest_use_soundex.o: $(SRCDIR)suggest_use_soundex.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)suggest_use_soundex.c -o $(OBJDIR)suggest_use_soundex.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+#9
+$(OBJDIR)auto_complete.o: $(SRCDIR)auto_complete.c
+	$(CC) $(CFLAGS) -c $(SRCDIR)auto_complete.c -o $(OBJDIR)auto_complete.o $(LDFLAGS)    `pkg-config gtk+-3.0 --cflags --libs`
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+run: $(BIN)
+	./$(BIN)
+
+.PHONY: clean
+clean:
+	rm -rf $(BINDIR) $(OBJDIR) #????????????????????

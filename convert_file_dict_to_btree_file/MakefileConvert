@@ -1,0 +1,15 @@
+#make file convert
+#dùng make file có thể truy cập, xóa các phần như terminald được không?
+#CỰC KÌ CẨN THẬN DẤU CÁCH KHI NHẬP HAY XUẤT BAAATYS CỨ THỨ GÌ
+#khi mà ra sai sẽ ghi là "did you mean:"
+
+default: run
+
+main:
+	clear 
+	gcc -o convert_to_btree_file convert_to_btree_file.c -Lbtree/lib -lbt -Ibtree/inc -no-pie
+
+run: main
+	./convert_to_btree_file AnhViet.txt DictData.dat
+clean:
+	rm -f main

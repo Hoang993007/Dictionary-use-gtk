@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "btree.h"
+#include "dictionary.h"
+#include<gtk/gtk.h>
+
+void suggest_use_soundex(gpointer cb_data)
+{
+ tab_suggest->Btree=btree;
+  tab_suggest->GW1=window;
+  tab_suggest->GW2=view;
+  tab_suggest->GW3=search_entry;
+  tab_suggest->tree_view1=tree_view;
+  tab_suggest->store_suggest=store_suggest;
+  tab_suggest->store_autocomplete=autocomplete_list;
+  tab_suggest->check_change=&check_change;
+  tab_suggest->mess_info=show_info;
+
+
+  data_give*pointer=(data_give*)cb_data;
+  init();
+  if(*(pointer->check_change)!=0) 
+{
+set_textView_text(pointer->GW3,"change soundex list");
+make_btree_soundex(pointer->Btree);
+*(pointer->check_change)=0;
+}else set_textView_text(pointer->GW3,"u_change soundex list");
+   
+  char word_suggest[WORD_LENGTH];
+  strcpy(word_suggest, gtk_entry_get_text(GTK_ENTRY(pointer->GW1)));
+
+  int i=strlen(word_suggest);
+  while(word_suggest[i-1]==' ')
+    {
+      word_suggest[i-1]='\0';
+      i=i-1;
+    }
+
+init();
+  char *soundex_code=(char*)soundex(word_suggest);
+  BTA*btree_soundex=btopn("Dict_soundex.dat",0,0);
+
+  char word[WORD_LENGTH];
+  char mean[1];
+
+  int check;
+  if(check=btchgr(btree_soundex,soundex_code)!=0) 
+{//SỬA LẠI CHỖ NÀY
+ pointer->mess_info->title=NULL;
+          char c[]="Suggest";
+          pointer->mess_info->GW1=pointer->GW2;
+          pointer->mess_info->text1=c;
+          char d[]="That is a new word\nmay be you wrong or we did'n know is\ndo you want to add it to your own dictionary?";
+          pointer->mess_info->text2=d;
+          show_mess(pointer->GW2,pointer->mess_info);
+}
+  else
+    {
+      //printf("Did you mean:\n");
+      btpos(btree_soundex,1);//đưa con trỏ về đầu current root
+      int rsize;
+      while(btseln(btree_soundex,word,mean,0,&rsize)==0)
+             add_to_list(pointer->tree_view1,word);
+    }
+btcls(btree_soundex);
+return;
+}

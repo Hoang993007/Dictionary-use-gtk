@@ -1,0 +1,89 @@
+//khi gọi xuyên màn đên: gọi từ một file c đến một chương trình con trong file.c khác mà chương trình con đó không được liệt kê trong file include.h thì sẽ xảy ra mớ lỗi
+
+#ifndef _dictionary_
+#define _dictionary_
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include"btree.h"
+#include<gtk/gtk.h>
+
+
+/*Định nghĩa kiểu dữ liệu truyền vào hàm in bảng chọn thông báo*/
+typedef struct
+{
+  GtkMessageType MesType;
+  GtkButtonsType BtnsType;
+  GtkWidget*GW1;
+  GtkWidget*GW2;
+  char*title;
+  char*text1;
+  char*text2;
+  gint answer;
+}MESSAGE;
+
+typedef struct data_give
+{
+  BTA*Btree;
+  GtkWidget*GW1;
+  GtkWidget*GW2;
+  GtkWidget*GW3;
+
+  char*char1;
+  char*char2;
+  char*char3;
+
+  char*wordNow;
+
+  MESSAGE* mess_info;
+  MESSAGE* mess_error;
+  MESSAGE* mess_question;
+  MESSAGE* mess_warning;
+
+  GtkWidget*tree_view1;
+  GtkWidget*history;
+
+  GtkListStore *store_suggest;
+  GtkListStore *store_history;
+
+  int flag;
+  GtkListStore *store_autocomplete;
+  int *check_change;
+
+  gint id;
+  gint id2;
+  GtkWidget*GW5;
+  GtkWidget*GW6;
+  GtkWidget*GW7;
+  GtkTreeSelection *selection;
+
+}data_give;
+
+int search_word(char*mean,data_give*pointer);
+int delete_word(data_give*pointer);
+void fix_word(GtkWidget * widget, gpointer cb_data);
+void add_new_word(GtkWidget*widget,gpointer cb_data);
+const char* soundex(const char*s);
+void make_btree_soundex(BTA*btree);
+void init();
+void suggest_use_soundex(gpointer cb_data);
+void autocomplete(gpointer cb_data);
+void set_textView_text(GtkWidget*text_view, char * text);
+void show_mess(GtkWidget*widget,gpointer message );
+void find_function(GtkWidget*widget, gpointer cb_data);
+void delete_function(GtkWidget * widget, gpointer cb_data);
+void add_function(GtkWidget * widget, gpointer cb_data);
+void edit_function(GtkWidget * widget, gpointer cb_data);
+void add_to_list_autocomplete(GtkListStore *store, const gchar *str); 
+void add_to_list(GtkListStore *store, const gchar *str) ;
+void add_to_list_his(GtkListStore *store, const gchar *str) ;
+void find_function(GtkWidget*widget, gpointer cb_data); 
+void on_changed_autocomplete(GtkTreeSelection *widget, gpointer cb_data) ;
+void chuanHoaXau(char*tmp);
+
+/*constant value*/
+#define WORD_LENGTH 100
+#define MEAN_LENGTH 1000000
+
+#endif
