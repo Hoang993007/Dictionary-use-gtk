@@ -6,10 +6,7 @@ Soundex is a phonetic algorithm for indexing names by sound, as pronounced in En
 Definition of soundex: https://en.wikipedia.org/wiki/Soundex
 
 GTK+ instruction: it contain some knowledge about GTK+ that I had wrote down from website
-I have here some website to guide:
-1.
-2.
-3.
+I have here some website to guide. You can find it in "GTK - DICTIONARY APT SORCE.ods"
 
 bin: contain the .exe file which used to run app. 
 But at the last time I ran it, I can not use this file by cliking but use terminal to ran this file.
