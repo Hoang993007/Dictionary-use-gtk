@@ -20,6 +20,8 @@ obj: contain file had been complied to .o file or binary file.
 
 src: contain my source code.
 
+I have some file .png and .jpg which I use as some picture and symbol for my app
+
 **************************************************************************
 
 1. Phần code
