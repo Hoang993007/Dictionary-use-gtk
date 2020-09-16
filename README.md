@@ -24,27 +24,20 @@ I have some file .png and .jpg which I use as some picture and symbol for my app
 
 **************************************************************************
 
-1. Phần code
-- Dùng soundex
-- Dùng btree
+1. Libs
+- soundex
+- btree
 
-2. Phần giao diện
-- Dùng GTK
+2. GUI
+- Use GTK
 
-3. Make file được dùng để kết nối các phần của chương trình 
+3. How to run
++) copy file "btree" into file "convert_file_dict_to_btree"
++) In terminal: make -f MakefileDictionary 
 
-4. Cách chạy phần mềm
-coppy file btree to convert_file_dict_to_btree and run
-
-vào terminal 
-gõ: make -f MakefileDictionary 
-
-5. Cấu trúc file dữ liệu 
-	bin: lưu file chạy
-	btree
-	Convert_file_dict_to_btree_file: 
-		1) convert từ file từ điển "AnhViet.txt" sang file của btree "DictData.dat"
-		2) tạo file btree "Dict_soundex.dat" phân loại các từ theo code có được từ hàm soundex 
-	inc: file .h
-	obj: file .o
-	src: file .c
+4. Files 
+- bin: .o file
+- btree library
+- Convert_file_dict_to_btree_file: 
+	1) convert từ file từ điển "AnhViet.txt" sang file của btree "DictData.dat"
+	2) tạo file btree "Dict_soundex.dat" phân loại các từ theo code có được từ hàm soundex 
